@@ -24,16 +24,20 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([])
   const [filteredPosts, setFilteredPosts] = useState([])
+  const handleTagClick = (tag) =>{
+    setSearchText(tag);
+    setFilteredPosts(posts.filter((post) => post.tag.toLowerCase().includes(tag.toLowerCase())))
+  }
   const handleSearchChange = (e) =>{
     e.preventDefault();
     setSearchText(e.target.value);
-      if (e.target.value === '' || e.target.value === null || e.target.value.trim().length === 0) {
-        setFilteredPosts(posts);
-        return;
-      }
-      setFilteredPosts(posts.filter((post) =>{
-      return post.tag.toLowerCase().includes(searchText.toLowerCase()) || post.creator.username.toLowerCase().includes(searchText.toLowerCase())
-    }))
+    //   if (e.target.value === '' || e.target.value === null || e.target.value.trim().length === 0) {
+    //     setFilteredPosts(posts);
+    //     return;
+    //   }
+    //   setFilteredPosts(posts.filter((post) =>{
+    //   return post.tag.toLowerCase().includes(searchText.toLowerCase()) || post.creator.username.toLowerCase().includes(searchText.toLowerCase())
+    // }))
 
   }
   useEffect(() => {
@@ -50,6 +54,18 @@ const Feed = () => {
     setFilteredPosts(posts);
 
   },[posts])
+
+ useEffect(() => {
+    if (searchText === '' || searchText === null || searchText.trim().length === 0) {
+      setFilteredPosts(posts);
+      return;
+    }
+    setFilteredPosts(posts.filter((post) =>{
+      return post.tag.toLowerCase().includes(searchText.toLowerCase()) || post.creator.username.toLowerCase().includes(searchText.toLowerCase())
+    })) 
+ }, [searchText])
+ 
+  
 
 
   
@@ -68,7 +84,7 @@ const Feed = () => {
         />
       <PromptCardList
         data = {filteredPosts}
-        handleTagClick = {() => {}}
+        handleTagClick = {handleTagClick}
 
       />
     </section>
