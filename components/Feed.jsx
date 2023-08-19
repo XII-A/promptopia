@@ -61,7 +61,7 @@ const Feed = () => {
       return;
     }
     setFilteredPosts(posts.filter((post) =>{
-      return post.tag.toLowerCase().includes(searchText.toLowerCase()) || post.creator.username.toLowerCase().includes(searchText.toLowerCase())
+      return post.tag.toLowerCase().includes(searchText.toLowerCase()) || post.creator.username.toLowerCase().includes(searchText.toLowerCase()) || post.prompt.toLowerCase().includes(searchText.toLowerCase())
     })) 
  }, [searchText])
  
